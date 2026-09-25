@@ -1,0 +1,30 @@
+---
+title: "8StrainGrowthCurve"
+format: html
+editor: visual
+---
+```{r}
+## package installation
+install.packages("tidyverse")
+install.packages("googlesheets4")
+install.packages("ggplot2")
+
+library(tidyverse)
+library(googlesheets4)
+library(ggplot2)
+```
+
+```{r}
+#importing the datasheet from google sheets
+growthCurve <- read_sheet("https://docs.google.com/spreadsheets/d/1b7LSO0ekXlpirAFBT_dzdURvNLGnmCvSjaBsxOryJKY/edit?gid=0#gid=0")
+```
+
+```{r}
+#practice visualizations 
+ggplot(growthCurve, aes(x = minutes, y = opticalDensity, color = bacteriaName, group = bacteriaName)) +
+  geom_point() +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Time Incubating (Minutes)", y = "Optical Density", color = "Bacterial Strain") +
+  scale_color_manual(values = c("tomato", "goldenrod1", "lightblue","plum", "darkolivegreen3", "pink","hotpink2", "darkslategray4", "olivedrab")) +
+  theme_minimal()
+```
