@@ -3,12 +3,15 @@ title: "8StrainGrowthCurve"
 format: html
 editor: visual
 ---
+
 ```{r}
 ## package installation
 install.packages("tidyverse")
 install.packages("googlesheets4")
 install.packages("ggplot2")
+```
 
+```{r}
 library(tidyverse)
 library(googlesheets4)
 library(ggplot2)
