@@ -22,61 +22,51 @@ hplc <- read_sheet("https://docs.google.com/spreadsheets/d/1UmKBgSnG77ulOw50kXFP
 ```
 
 ```{r}
-#practice visualizations 
+library(dplyr)
+library(ggplot2)
 
+#practice visualizations 
 hplc_clean <- hplc %>%
-filter(!is.na(adjConcentration)) %>%
-filter(compound %in% c("MHET", "TPA"))
+  filter(!is.na(adjConcentration)) %>%
+  filter(compound %in% c("MHET", "TPA"))
 
 sample_names <- c(
   "3" = "E. Coli",
   "4" = "New Soil",
   "5" = "Old Soil",
-  "6" = "PBS Buffer Control")
+  "6" = "PBS Buffer Control"
+)
 
 sample_colors <- c(
   "3" = "darkolivegreen3",
   "4" = "goldenrod1",
   "5" = "lightblue",
-  "6" = "tomato")
+  "6" = "tomato"
+)
 
-#####MHET plot
-ggplot(data = hplc_clean %>% filter(compound == "MHET"),
-       aes(x = dayNumber, y = adjConcentration,
-           color = factor(sampleNumber),
-           group = sampleNumber)) +
-  geom_line(linewidth = 1) +
-  geom_point(size = 3) +
-  scale_color_manual(
-    values = sample_colors,
-    labels = sample_names,
-    name = "Sample") +
-  labs(title = "MHET Concentration Over Time",
-    x = "Day",
-    y = "MHET Concentration") +
- theme_bw() +
-  theme(text = element_text(family = "Times New Roman"),
-    plot.title = element_text(size = 14, face = "bold"),
-    axis.title = element_text(size = 12))
-
-######both 
 ggplot(data = hplc_clean,
        aes(x = dayNumber, y = adjConcentration,
            color = factor(sampleNumber),
            group = sampleNumber)) +
   geom_line(linewidth = 1) +
   geom_point(size = 3) +
-  facet_wrap(~compound, scales = "free_y") +
-  scale_color_manual(values = sample_colors,
+  facet_wrap(~compound, scales = "fixed") +
+  scale_color_manual(
+    values = sample_colors,
     labels = sample_names,
-    name = "Sample") +
-  labs(title = "HPLC Compound Concentrations Over Time",
+    name = "Sample"
+  ) +
+  labs(
+    title = "HPLC Compound Concentrations Over Time",
     x = "Day",
-    y = "Concentration") +
+    y = "Concentration"
+  ) +
   theme_bw() +
-  theme(text = element_text(family = "Times New Roman"),
+  theme(
+    text = element_text(family = "Times New Roman"),
     plot.title = element_text(size = 14, face = "bold"),
-    axis.title = element_text(size = 12))
+    axis.title = element_text(size = 12)
+  )
 ```
 
 
