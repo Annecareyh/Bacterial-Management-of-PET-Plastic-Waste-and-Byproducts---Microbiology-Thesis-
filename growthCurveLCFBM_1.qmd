@@ -1,0 +1,54 @@
+---
+title: "growthCurveLCFBM_1"
+format: html
+---
+
+```{r}
+## package installation
+install.packages("tidyverse")
+install.packages("googlesheets4")
+install.packages("ggplot2")
+```
+
+```{r}
+library(tidyverse)
+library(googlesheets4)
+library(ggplot2)
+```
+
+```{r}
+#importing the datasheet from google sheets
+gcLCFBM<- read_sheet("https://docs.google.com/spreadsheets/d/1lqgVFD5BCksluW4-5XASX_WKXKzsmmed-4Q6uYJGg2c/edit?gid=0#gid=0")
+```
+
+```{r}
+#practice visualizations 
+ggplot(gcLCFBM, aes(x = Time, y = averageOpticalDensity, color = soilAndPlate, group =soilAndPlate)) +
+  geom_point(size=1) +
+ geom_line(linewidth = 0.2) +
+  labs(x = "Sample Time Points (8 hour intervals)", y = "Optical Density", color = "Bacterial Strain") +
+  scale_color_manual(values = c("tomato", "goldenrod1", "lightblue","plum", "darkolivegreen3", "pink","hotpink2", "darkslategray4", "olivedrab", "orange", "blue")) +
+  theme_minimal() 
+```
+
+```{r}
+ggplot(gcLCFBM, aes(x = Time, y = averageOpticalDensity)) +
+  geom_point(size = 2, aes(color = soilAndPlate)) +
+  geom_area( alpha = 0.3) +
+  geom_line(linewidth = 0.7, aes(color = soilAndPlate)) +
+  scale_color_manual( values = c("o1" = "darkslategray4", "o2" = "darkslategray4", "o3" = "darkslategray4", "o4" = "darkslategray4", "o5" = "darkslategray4", "n2" = "goldenrod1",  "n3" = "goldenrod1",  "n4" = "goldenrod1", "n5" = "goldenrod1", "c1" = "hotpink", "e1" = "darkolivegreen3" )) +
+  facet_wrap(~ soilAndPlate) +
+  labs(title = "Bacterial Growth Over Time",
+    x = "Time (8-hour intervals)",
+    y = "Average Optical Density (OD)") +
+  theme_minimal() +
+  theme(text = element_text(family = "Times New Roman"),
+    strip.text = element_text(size = 10, face = "bold"),
+    axis.text = element_text(size = 9),
+    plot.title = element_text(size = 14, face = "bold"))
+```
+
+
+
+
+
